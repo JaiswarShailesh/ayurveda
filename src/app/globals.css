@@ -1,26 +1,123 @@
-@import "tailwindcss";
+/* --- Import Google Fonts --- */
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Nunito+Sans:wght@400;600&display=swap");
 
+/* --- Tailwind layers --- */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* --- Color Palette --- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ayu-green: #6b8e23;
+  --ayu-beige: #f5f3e7;
+  --ayu-brown: #8b6e4e;
+
+  --font-heading: "Lora", serif;
+  --font-body: "Nunito Sans", sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* --- Base Styles --- */
+@layer base {
+  body {
+    background-color: var(--ayu-beige);
+    color: var(--ayu-brown);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+  }
+
+  body,
+  p,
+  a {
+    font-family: var(--font-body);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* --- Utility Classes --- */
+
+/* Colors */
+.text-ayu-green {
+  color: var(--ayu-green) !important;
+}
+.bg-ayu-green {
+  background-color: var(--ayu-green) !important;
+}
+.border-ayu-green {
+  border-color: var(--ayu-green) !important;
+}
+
+.text-ayu-beige {
+  color: var(--ayu-beige) !important;
+}
+.bg-ayu-beige {
+  background-color: var(--ayu-beige) !important;
+}
+.border-ayu-beige {
+  border-color: var(--ayu-beige) !important;
+}
+
+.text-ayu-brown {
+  color: var(--ayu-brown) !important;
+}
+.bg-ayu-brown {
+  background-color: var(--ayu-brown) !important;
+}
+.border-ayu-brown {
+  border-color: var(--ayu-brown) !important;
+}
+
+/* Hover effects */
+.hover-text-ayu-green:hover {
+  color: var(--ayu-green) !important;
+}
+.hover-bg-ayu-green:hover {
+  background-color: var(--ayu-green) !important;
+}
+.hover-text-ayu-brown:hover {
+  color: var(--ayu-brown) !important;
+}
+.hover-bg-ayu-brown:hover {
+  background-color: var(--ayu-brown) !important;
+}
+
+/* Glassy Dropdown Effect */
+.dropdown-glass {
+  background-color: rgba(245, 243, 231, 0.95); /* semi-transparent beige */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--ayu-brown);
+  border-radius: 0.5rem;
+}
+
+/* Rotate chevron when active */
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: transform 0.2s ease-in-out;
 }
