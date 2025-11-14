@@ -79,7 +79,7 @@ export default function Navbar() {
   return (
     <header className="w-full fixed top-0 z-50">
       {/* 🌿 Top Bar */}
-      <div className="bg-[var(--ayu-beige)] text-[var(--ayu-green)] text-sm py-2 border-b border-[var(--ayu-brown)]">
+      <div className="bg-green-100 text-green-700 text-sm py-2 border-b border-green-500">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-8">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-1">
@@ -92,7 +92,7 @@ export default function Navbar() {
             </div>
           </div>
           <div className="text-xs md:text-sm font-medium hidden md:block">
-            SVKM's Krutiben Bhupeshbhai Patel Ayurveda College, Hospital &
+            SVKM&apos;s Krutiben Bhupeshbhai Patel Ayurveda College, Hospital &
             Research Center
           </div>
         </div>
@@ -101,13 +101,13 @@ export default function Navbar() {
       {/* 🌿 Main Navbar */}
       <nav
         ref={dropdownRef}
-        className="bg-[var(--ayu-beige)]/95 backdrop-blur-md shadow-sm border-b border-[var(--ayu-brown)]"
+        className="bg-white backdrop-blur-md shadow-sm border-b border-green-500"
       >
         <div className="container mx-auto flex justify-between items-center py-2 px-4 md:px-8">
           {/* Logo */}
           <Link
             href="/"
-            className="text-2xl md:text-3xl font-bold text-[var(--ayu-green)]"
+            className="text-2xl md:text-3xl font-bold text-green-800"
           >
             <Image
               src="/images/nursing_logo.png"
@@ -124,14 +124,14 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Menu */}
-          <ul className="hidden lg:flex xl:space-x-5 md:space-x-3 text-[var(--ayu-brown)] font-medium relative">
+          <ul className="hidden lg:flex xl:space-x-5 md:space-x-3 text-green-800 font-medium relative text-sm xl:text-base">
             {menuItems.map((menu) => (
               <li key={menu.label} className="relative group">
                 {menu.sub ? (
                   <>
                     <button
                       onClick={() => handleDropdown(menu.label)}
-                      className="flex items-center gap-1 hover:text-[var(--ayu-green)] transition"
+                      className="flex items-center gap-1 hover:text-green-500 transition"
                     >
                       {menu.label}
                       <ChevronDown
@@ -144,7 +144,7 @@ export default function Navbar() {
 
                     {/* 2nd Level */}
                     {activeDropdown === menu.label && (
-                      <ul className="absolute bg-[var(--ayu-beige)] shadow-lg mt-2 py-2 w-56 rounded-lg border border-[var(--ayu-brown)] animate-fadeIn">
+                      <ul className="absolute bg-green-100 shadow-lg mt-2 py-2 w-56 rounded-lg border border-green-500 animate-fadeIn">
                         {menu.sub.map((subItem) => (
                           <li key={subItem.label} className="relative group">
                             {subItem.sub ? (
@@ -196,7 +196,7 @@ export default function Navbar() {
                 ) : (
                   <Link
                     href={menu.href}
-                    className="hover:text-[var(--ayu-green)] transition"
+                    className="hover:text-green-500 transition"
                   >
                     {menu.label}
                   </Link>
