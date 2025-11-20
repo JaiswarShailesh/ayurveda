@@ -24,12 +24,18 @@ export default function AboutSection() {
           <h2 className="text-2xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-green-800">
             About Our Institution
           </h2>
-          <p className="text-green-700 text-xs md:text-sm xl:text-base leading-relaxed">
-            SVKM’s Krutiben Bhupeshbhai Patel Ayurveda College, Hospital &
-            Research Center is dedicated to nurturing the ancient wisdom of
-            Ayurveda through modern education and compassionate healthcare. Our
-            institution blends tradition and innovation, shaping skilled
-            professionals who promote holistic wellness.
+          <p className="text-gray-700 text-xs md:text-sm xl:text-base leading-relaxed">
+            Our Ayurveda College & Hospital is committed to preserving the
+            ancient wisdom of Ayurveda while integrating modern medical
+            practices. With a strong academic foundation and exceptional
+            clinical exposure, we aim to develop skilled Ayurvedic professionals
+            capable of making meaningful contributions to healthcare.
+          </p>
+          <p className="text-gray-700 text-xs md:text-sm xl:text-base leading-relaxed">
+            Our institution focuses on patient-centric healing, research-driven
+            learning, and a holistic approach to wellness. We strive to maintain
+            the highest standards in education, treatment, and community
+            service.
           </p>
           <Link
             href="/about/overview"

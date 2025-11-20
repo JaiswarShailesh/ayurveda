@@ -20,7 +20,7 @@
 /* --- Base Styles --- */
 @layer base {
   body {
-    background-color: var(--ayu-beige);
+    /* background-color: var(--ayu-beige); */
     color: var(--ayu-brown);
   }
 

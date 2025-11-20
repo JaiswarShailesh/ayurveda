@@ -7,30 +7,41 @@ import Image from "next/image";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+
+  // FIXED STATE — separate parent/child dropdown
+  const [activeParent, setActiveParent] = useState<string | null>(null);
+  const [activeChild, setActiveChild] = useState<string | null>(null);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(e.target as Node)
       ) {
-        setActiveDropdown(null);
+        setActiveParent(null);
+        setActiveChild(null);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleDropdown = (menu: string) => {
-    setActiveDropdown(activeDropdown === menu ? null : menu);
+  const toggleParent = (menu: string) => {
+    setActiveParent(activeParent === menu ? null : menu);
+    setActiveChild(null);
+  };
+
+  const toggleChild = (menu: string) => {
+    setActiveChild(activeChild === menu ? null : menu);
   };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
-    setActiveDropdown(null);
+    setActiveParent(null);
+    setActiveChild(null);
   };
 
   const menuItems = [
@@ -38,11 +49,13 @@ export default function Navbar() {
     {
       label: "About Us",
       sub: [
-        { label: "Overview", href: "/about/overview" },
-        { label: "Vision & Mission", href: "/about/vision" },
+        { label: "About Institution", href: "/about/institution" },
+        { label: "About SVKM", href: "/about/svkm" },
+        { label: "Vision & Mission", href: "/about/mission-vision" },
         {
           label: "Leadership",
           sub: [
+            { label: "President’s Message", href: "/about/president" },
             { label: "Principal’s Message", href: "/about/principal" },
             { label: "Management", href: "/about/management" },
           ],
@@ -50,26 +63,70 @@ export default function Navbar() {
       ],
     },
     {
-      label: "Departments",
+      label: "Hospital",
       sub: [
-        { label: "Kayachikitsa", href: "/departments/kayachikitsa" },
-        { label: "Shalya Tantra", href: "/departments/shalya" },
-        { label: "Panchakarma", href: "/departments/panchakarma" },
+        { label: "Doctors", href: "/hospital/doctors" },
+        {
+          label: "Services Offered",
+          sub: [
+            { label: "Kayachikitsa", href: "/departments/kayachikitsa" },
+            { label: "Shalya Tantra", href: "/departments/shalya" },
+            { label: "Panchakarma", href: "/departments/panchakarma" },
+          ],
+        },
+        {
+          label: "OPD",
+          sub: [
+            { label: "Kayachikitsa OPD", href: "/about/president" },
+            { label: "Kaumarbhritya OPD", href: "/about/principal" },
+            { label: "Shalya Tantra OPD", href: "/about/management" },
+            {
+              label: "Prasutitantra & Striroga OPD",
+              href: "/about/management",
+            },
+            { label: "Shalakyatantra OPD", href: "/about/management" },
+          ],
+        },
+        {
+          label: "IDP",
+          sub: [
+            { label: "Panchakarma (Male)", href: "/about/president" },
+            { label: "Panchakarma (Female)", href: "/about/president" },
+            { label: "Kayachikitsa (Male)", href: "/about/principal" },
+            { label: "Kayachikitsa (Female)", href: "/about/principal" },
+            { label: "Shalyatantra (Male)", href: "/about/management" },
+            { label: "Shalyatantra (Female)", href: "/about/management" },
+          ],
+        },
+        { label: "Online Consultation", href: "/hospital/online-consultation" },
       ],
     },
     {
-      label: "Doctors",
+      label: "For Students",
       sub: [
-        { label: "Faculty", href: "/doctors/faculty" },
-        { label: "Visiting Consultants", href: "/doctors/consultants" },
+        { label: "List of Students", href: "/hospital/doctors" },
+        {
+          label: "Courses Offered",
+          sub: [
+            { label: "President’s Message", href: "/about/president" },
+            { label: "Principal’s Message", href: "/about/principal" },
+            { label: "Management", href: "/about/management" },
+          ],
+        },
+        { label: "Admission Process", href: "/hospital/doctors" },
+        { label: "Fees", href: "/hospital/doctors" },
+        { label: "Curriculum", href: "/hospital/doctors" },
+        { label: "Acadamic Time Table", href: "/hospital/doctors" },
+        { label: "Anti Ragging Committee", href: "/hospital/doctors" },
       ],
     },
+    { label: "Research & Publications", href: "/career" },
     {
-      label: "Patient Services",
+      label: "Community",
       sub: [
-        { label: "OPD Services", href: "/services/opd" },
-        { label: "IPD Services", href: "/services/ipd" },
-        { label: "Pharmacy", href: "/services/pharmacy" },
+        { label: "News & Events", href: "/hospital/doctors" },
+        { label: "Image Gallery", href: "/hospital/doctors" },
+        { label: "Blogs", href: "/hospital/doctors" },
       ],
     },
     { label: "Career", href: "/career" },
@@ -78,7 +135,7 @@ export default function Navbar() {
 
   return (
     <header className="w-full fixed top-0 z-50">
-      {/* 🌿 Top Bar */}
+      {/* Top Bar */}
       <div className="bg-green-100 text-green-700 text-sm py-2 border-b border-green-500">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-8">
           <div className="flex items-center space-x-4">
@@ -98,7 +155,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* 🌿 Main Navbar */}
+      {/* Main Navbar */}
       <nav
         ref={dropdownRef}
         className="bg-white backdrop-blur-md shadow-sm border-b border-green-500"
@@ -111,16 +168,11 @@ export default function Navbar() {
           >
             <Image
               src="/images/nursing_logo.png"
-              alt="Nursing Logo"
+              alt="Logo"
               width={180}
               height={180}
               className="w-auto h-[60px] md:h-[70px]"
             />
-            {/* <img
-              src="/images/nursing_logo.png"
-              alt=""
-              style={{ maxHeight: "60px" }}
-            /> */}
           </Link>
 
           {/* Desktop Menu */}
@@ -129,51 +181,53 @@ export default function Navbar() {
               <li key={menu.label} className="relative group">
                 {menu.sub ? (
                   <>
+                    {/* Parent Button */}
                     <button
-                      onClick={() => handleDropdown(menu.label)}
+                      onClick={() => toggleParent(menu.label)}
                       className="flex items-center gap-1 hover:text-green-500 transition"
                     >
                       {menu.label}
                       <ChevronDown
                         size={16}
-                        className={`transition-transform duration-200 ${
-                          activeDropdown === menu.label ? "rotate-180" : ""
+                        className={`transition-transform ${
+                          activeParent === menu.label ? "rotate-180" : ""
                         }`}
                       />
                     </button>
 
-                    {/* 2nd Level */}
-                    {activeDropdown === menu.label && (
+                    {/* Parent Dropdown */}
+                    {activeParent === menu.label && (
                       <ul className="absolute bg-green-100 shadow-lg mt-2 py-2 w-56 rounded-lg border border-green-500 animate-fadeIn">
-                        {menu.sub.map((subItem) => (
-                          <li key={subItem.label} className="relative group">
-                            {subItem.sub ? (
+                        {menu.sub.map((sub) => (
+                          <li key={sub.label} className="relative group">
+                            {sub.sub ? (
                               <>
+                                {/* Child Button */}
                                 <button
-                                  onClick={() => handleDropdown(subItem.label)}
-                                  className="flex justify-between w-full text-left px-4 py-2 hover:bg-[var(--ayu-green)] hover:text-white"
+                                  onClick={() => toggleChild(sub.label)}
+                                  className="flex justify-between w-full text-left px-4 py-2 hover:bg-green-600 hover:text-white"
                                 >
-                                  {subItem.label}
+                                  {sub.label}
                                   <ChevronDown
                                     size={14}
-                                    className={`transition-transform duration-200 ${
-                                      activeDropdown === subItem.label
+                                    className={`transition-transform ${
+                                      activeChild === sub.label
                                         ? "rotate-180"
                                         : ""
                                     }`}
                                   />
                                 </button>
 
-                                {/* 3rd Level */}
-                                {activeDropdown === subItem.label && (
-                                  <ul className="absolute left-full top-0 bg-[var(--ayu-beige)] shadow-lg py-2 w-56 rounded-lg border border-[var(--ayu-brown)] animate-fadeIn">
-                                    {subItem.sub.map((thirdItem) => (
-                                      <li key={thirdItem.label}>
+                                {/* Third Level */}
+                                {activeChild === sub.label && (
+                                  <ul className="absolute left-full top-0 bg-green-50 shadow-lg py-2 w-56 rounded-lg border border-green-500 animate-fadeIn">
+                                    {sub.sub.map((third) => (
+                                      <li key={third.label}>
                                         <Link
-                                          href={thirdItem.href}
-                                          className="block px-4 py-2 hover:bg-[var(--ayu-green)] hover:text-white"
+                                          href={third.href}
+                                          className="block px-4 py-2 hover:bg-green-600 hover:text-white"
                                         >
-                                          {thirdItem.label}
+                                          {third.label}
                                         </Link>
                                       </li>
                                     ))}
@@ -182,10 +236,10 @@ export default function Navbar() {
                               </>
                             ) : (
                               <Link
-                                href={subItem.href}
-                                className="block px-4 py-2 hover:bg-[var(--ayu-green)] hover:text-white"
+                                href={sub.href}
+                                className="block px-4 py-2 hover:bg-green-600 hover:text-white"
                               >
-                                {subItem.label}
+                                {sub.label}
                               </Link>
                             )}
                           </li>
@@ -205,24 +259,24 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Button */}
           <button
-            className="lg:hidden text-[var(--ayu-green)]"
+            className="lg:hidden text-green-700"
             onClick={toggleMobileMenu}
           >
             {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
         </div>
 
-        {/* 🌿 Mobile Menu */}
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="bg-[var(--ayu-beige)] border-t border-[var(--ayu-brown)] lg:hidden animate-fadeIn">
-            <ul className="flex flex-col p-4 space-y-2 text-[var(--ayu-brown)]">
+          <div className="bg-green-50 border-t border-green-500 lg:hidden animate-fadeIn">
+            <ul className="flex flex-col p-4 space-y-2 text-green-800">
               {menuItems.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href || "#"}
-                    className="block py-2 border-b border-[var(--ayu-brown)] hover:text-[var(--ayu-green)]"
+                    className="block py-2 border-b border-green-400 hover:text-green-600"
                   >
                     {item.label}
                   </Link>

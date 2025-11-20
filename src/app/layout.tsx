@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lora, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 // --- Load fonts ---
 const lora = Lora({
@@ -38,6 +39,7 @@ export default function RootLayout({
       >
         <Navbar />
         <main className="pt-25 md:pt-26">{children}</main>
+        <Footer />
       </body>
     </html>
   );
